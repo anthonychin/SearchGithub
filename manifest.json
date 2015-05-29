@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Search Github",
+  "description": "Searching github related keyword",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png", //temp
+    "default_popup": "popup.html",
+    "default_title": "name"
+  },
+  "permissions": [
+    "activeTab",
+    "https://github.com/",
+    "*://*.github.com/*"
+  ]
+}
