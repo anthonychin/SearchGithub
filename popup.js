@@ -5,8 +5,6 @@
  *   is found.
  **/
 function getCurrentTabUrl(callback) {
-  // query filter - it goes to chrome.tbs.query
-
   var queryInfo = {
     active: true,
     currentWindow: true
@@ -50,6 +48,13 @@ function getList(searchTerm, callback, errorCallback) {
     var listName = [];
     for (i = 0; i < response.items.length; i++) {
       listName.push(response.items[i].html_url);
+
+      var a = document.createElement('a');
+      a.setAttribute('href',response.items[i].html_url);
+      a.innerHTML = response.items[i].html_url;
+      document.getElementsByTagName('body')[0].appendChild(a);
+      var br = document.createElement('br');
+      document.getElementsByTagName('body')[0].appendChild(br);
     }
     callback(listName);
   };
@@ -72,13 +77,25 @@ function parse(url) {
   }
 }
 
+/**
+ * Avoided Jquery way
+ */
+function allowClickableLink() {
+  window.addEventListener('click',function(e){
+    if(e.target.href!==undefined){
+      chrome.tabs.create({url:e.target.href});
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  allowClickableLink();
   getCurrentTabUrl(function(url) {
     renderStatus('Performing parse of ' + parse(url));
 
     getList(parse(url), function(name) {
       renderStatus('Searchterm:' + parse(url) + '\n');
-      renderResult(name);
+      // renderResult(name); -- not needed for now
 
     }, function(errorMessage) {
       renderStatus('Cannot display list. ' + errorMessage);
