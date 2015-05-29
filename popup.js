@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(url) {
     renderStatus('Performing parse of ' + parse(url));
 
-
     getList(parse(url), function(name) {
       renderStatus('Searchterm:' + parse(url) + '\n');
       renderResult(name);
@@ -84,13 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, function(errorMessage) {
       renderStatus('Cannot display list. ' + errorMessage);
     });
-
-    // getList(url, function(name) {
-    //   renderStatus('Search term: ' + parse(url) + '\n');
-
-    // }, function(errorMessage) {
-    //   renderStatus('Cannot display list. ' + errorMessage);
-    // });
 
   });
 });
